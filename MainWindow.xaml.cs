@@ -1,45 +1,54 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Windows;
+using System.Windows.Controls;
+using GotYourWebhook.Pages;
 
 namespace GotYourWebhook
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Main window logic
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		HttpClient client = new HttpClient();
 
-		public async void DeleteWebhook(object sender, RoutedEventArgs e)
+		// Please dont create a client for every request ;)
+		public static HttpClient client = new HttpClient();
+
+		private void Setup()
 		{
-			string url = WebhookUrl.Text;
+			Main.Content = new Spammer();
 
-			if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+			foreach (Button button in MenuBtns.Children.OfType<Button>())
 			{
-				try
-				{
-					using (HttpResponseMessage response = await client.DeleteAsync(url))
-					{
-						if (response.StatusCode == System.Net.HttpStatusCode.OK)
-						{
-							MessageBox.Show("Webhook successfully deleted");
-						}
-					}
-				}
-				catch (HttpRequestException err)
-				{
-					MessageBox.Show($"Error: {err.Message}");
-				}
-			} else
+				button.Click += ButtonHandler;
+			}
+		}
+
+		public void ButtonHandler(object sender, RoutedEventArgs args)
+		{
+			switch (((Button)sender).Tag.ToString())
 			{
-				MessageBox.Show("Enter a valid URL");
+				case "Spammer":
+					Main.Content = new Spammer();
+					break;
+				case "Controller":
+					Main.Content = new Controller();
+					break;
+				case "Destroyer":
+					Main.Content = new Destroyer();
+					break;
+				case "Disaster":
+					Main.Content = new Disaster();
+					break;
 			}
 		}
 
 		public MainWindow()
 		{
 			InitializeComponent();
+			Setup();
 		}
 	}
 }

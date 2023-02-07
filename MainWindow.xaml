@@ -6,24 +6,30 @@
 		xmlns:local="clr-namespace:GotYourWebhook"
 		mc:Ignorable="d"
 		Title="GotYourWebHook"
-		Width="1280"
-		Height="720"
-		ResizeMode="CanMinimize"
-		MinWidth="560"
-		MinHeight="315"
-		Background="#1f1f1f">
+		Width="960"
+		Height="540"
+		ResizeMode="NoResize">
 
+	<Window.Background>
+		<LinearGradientBrush>
+			<GradientStop Offset="1" Color="#333333"/>
+			<GradientStop Offset="0" Color="#000000"/>
+		</LinearGradientBrush>
+	</Window.Background>
+	
 	<Window.Resources>
 		<Style TargetType="Button">
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="Height" Value="35"/>
 			<Setter Property="Background" Value="#444444"/>
 			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="FontFamily" Value="/Fonts/#Noto Sans"/>
+			<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="Button">
-						<Border Background="{TemplateBinding Background}" BorderBrush="#222222" BorderThickness="1">
+						<Border Background="{TemplateBinding Background}" BorderBrush="#333333">
 							<ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
 						</Border>
 					</ControlTemplate>
@@ -32,32 +38,35 @@
 
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="#333333"/>
+					<Setter Property="Background" Value="#222222"/>
 				</Trigger>
 			</Style.Triggers>
 		</Style>
 	</Window.Resources>
 
-	<Grid Margin="15">
-		<Border HorizontalAlignment="Center" VerticalAlignment="Center" Padding="12" CornerRadius="8">
-			<Border.Background>
-				<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-					<GradientStop Color="#333333" Offset="0"/>
-					<GradientStop Color="#444444" Offset="1"/>
-				</LinearGradientBrush>
-			</Border.Background>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
-			<StackPanel>
-				<Border Background="#222222">
-					<StackPanel>
-						<TextBlock Text="Webhook URL" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextAlignment="Center" Padding="15,0,15,0" Foreground="White" FontSize="13"/>
-						<TextBox x:Name="WebhookUrl" Text="dick" HorizontalAlignment="Stretch" Foreground="White" VerticalAlignment="Bottom" Margin="3" Background="#333333" BorderThickness="0" MaxLength="121"/>
-					</StackPanel>
-				</Border>
+		<StackPanel Width="300" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#333333" CanVerticallyScroll="False" Grid.Column="0" x:Name="MenuBtns">
+			<Button Content="Spammer" Tag="Spammer"/>
+			<Button Content="Controller" Tag="Controller"/>
+			<Button Content="Destroyer" Tag="Destroyer"/>
+			<Button Content="Make a disaster" Tag="Disaster"/>
+		</StackPanel>
 
-				<Button Content="Delete Webhook" Click="DeleteWebhook" Margin="0,5,0,0"/>
-			</StackPanel>
+		<TextBlock Text="Let me take care of that webhook :)" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20" Grid.Column="0" Foreground="White" FontSize="13"/>
+
+		<Border Background="#333333" Grid.Column="1" CornerRadius="20" Margin="15">
+			<Border.Effect>
+				<DropShadowEffect Color="Black"/>
+			</Border.Effect>
+
+			<Frame x:Name="Main" NavigationUIVisibility="Hidden"/>
+
 		</Border>
-	</Grid>
 
+	</Grid>
 </Window>
